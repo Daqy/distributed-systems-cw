@@ -16,8 +16,8 @@ public class GRPCClientService {
 	public String multiplyFiles(String matrixAContent, String matrixBContent) throws Exception {
 		validateMatrix(matrixAContent);
 		validateMatrix(matrixBContent);
-		int[][] matrixA = MatrixConversion.StringToIntArray(matrixAContent);
-		int[][] matrixB = MatrixConversion.StringToIntArray(matrixBContent);
+		// int[][] matrixA = MatrixConversion.StringToIntArray(matrixAContent);
+		// int[][] matrixB = MatrixConversion.StringToIntArray(matrixBContent);
 
 		//ch
 		// ManagedChannel channel1 = ManagedChannelBuilder.forAddress("localhost", 8080).usePlaintext().build();
