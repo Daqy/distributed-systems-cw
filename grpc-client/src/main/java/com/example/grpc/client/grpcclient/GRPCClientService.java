@@ -7,7 +7,9 @@ import com.example.grpc.server.grpcserver.MatrixRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import com.example.grpc.server.grpcserver.MatrixReply;
 import com.example.grpc.server.grpcserver.MatrixServiceGrpc;
@@ -16,6 +18,7 @@ import io.grpc.ManagedChannelBuilder;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class GRPCClientService {
@@ -63,79 +66,84 @@ public class GRPCClientService {
 		int numberServer = (int) Math.ceil((float)footprint*(float)11/(float)deadline);
 		numberServer = numberServer <= 8 ? numberServer : 8;
 
-		int stubCounter = 1;
+		BlockingQueue<Integer> stubCounter = new LinkedBlockingQueue<>((int) numBlockCalls);
+
+		for (int index = 0; index < 11; index++) {
+			stubCounter.add(index > numberServer ? index-numberServer : index);
+		}
+		// int stubCounter = 1;
 		
-		MatrixReply b1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply b1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply a1b2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply a1b2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(0)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(3)))
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply b1d2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply b1d2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(7)))
 		.build())).get();
 		
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply c1a2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply c1a2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(1)))
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply d1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply d1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply c1b2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply c1b2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(3)))
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply d1d2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply d1d2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(7)))
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply a3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
+		MatrixReply a3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(a1a2.getMatrix())
 		.setMatrixB(b1c2.getMatrix())
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply b3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
+		MatrixReply b3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(a1b2.getMatrix())
 		.setMatrixB(b1d2.getMatrix())
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply c3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
+		MatrixReply c3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(c1a2.getMatrix())
 		.setMatrixB(d1c2.getMatrix())
 		.build())).get();
 
-		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply d3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
+		MatrixReply d3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(c1b2.getMatrix())
 		.setMatrixB(d1d2.getMatrix())
 		.build())).get();
