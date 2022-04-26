@@ -56,7 +56,7 @@ public class GRPCClientService {
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(1)))
 		.build()));
 
-		String a1a2 = a1a2sync.get();
+		MatrixReply a1a2 = a1a2sync.get();
 		long endTime = System.nanoTime();
 		long footprint= endTime-startTime;
 
