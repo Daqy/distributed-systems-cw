@@ -19,10 +19,10 @@ public class GrpcServerApplication extends SpringBootServletInitializer {
 
 		for (int index = 0; index < cores; index++) {
 			try {
-				Server server = new GRPCServer(ports[index], index+1)._server;
-				server.start();
-				System.out.printf("Server %d started on port: %d\n", this._currentThread, this._port);
-				server.awaitTermination();
+				GRPCServer server = new GRPCServer(ports[index], index+1);
+				server._server.start();
+				System.out.printf("Server %d started on port: %d\n", index+1, ports[index]);
+				server._server.awaitTermination();
 			} catch (IOException error) {
 				error.printStackTrace();
 			} catch (InterruptedException error) {
