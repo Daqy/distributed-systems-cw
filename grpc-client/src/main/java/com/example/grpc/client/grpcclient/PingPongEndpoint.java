@@ -37,10 +37,10 @@ public class PingPongEndpoint {
 		try {
 			String matrixAContent = new String(matrixFile1.getBytes(), StandardCharsets.UTF_8);
 			String matrixBContent = new String(matrixFile2.getBytes(), StandardCharsets.UTF_8);
-			return grpcClientService.multiplyFiles(matrixAContent, matrixBContent);
+			return "grpcClientService.multiplyFiles(matrixAContent, matrixBContent)";
 		} catch (Exception error) {
 			error.printStackTrace();
-			return "error.getLocalizedMessage()";
+			return  error.getLocalizedMessage();
 		}
 	}
 }
