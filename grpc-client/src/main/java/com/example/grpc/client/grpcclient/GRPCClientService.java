@@ -63,7 +63,7 @@ public class GRPCClientService {
 		long endTime = System.nanoTime();
 		long footprint= endTime-startTime;
 
-		int numberServer = (int) Math.ceil((float)footprint*(float)11/(float)deadline);
+		int numberServer = (int) (((float)footprint*(float)11)/(float)deadline);
 		numberServer = numberServer <= 8 ? numberServer : 8;
 
 		BlockingQueue<Integer> stubCounter = new LinkedBlockingQueue<>((int) 11);
