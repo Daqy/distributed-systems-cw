@@ -10,7 +10,7 @@ public class GRPCServer extends Thread {
   public GRPCServer(int port, int currentThread) {
     this._port = port;
     this._currentThread = currentThread;
-    this._server = ServerBuilder.forPort(port).addService(new MatrixServiceImpl()).build();
+    this._server = ServerBuilder.forPort(port).addService(new MatrixServiceImpl(currentThread)).build();
   }
 
   public void startServer() {
