@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class GRPCClientService {
 	public String multiplyFiles(String matrixAContent, String matrixBContent) throws Exception {
-		validateMatrix(matrixAContent);
-		validateMatrix(matrixBContent);
+		// validateMatrix(matrixAContent);
+		// validateMatrix(matrixBContent);
 		int[][] matrixA = MatrixConversion.StringToIntArray(matrixAContent);
 		int[][] matrixB = MatrixConversion.StringToIntArray(matrixBContent);
 
