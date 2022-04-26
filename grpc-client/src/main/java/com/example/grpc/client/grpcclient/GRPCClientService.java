@@ -90,15 +90,15 @@ public class GRPCClientService {
 		.build());
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
-		String matrix = MatrixConversion.IntArrayToString(
-			mergeblocks(
-				MatrixConversion.StringToIntArray(a3.getMatrix()),
-				MatrixConversion.StringToIntArray(b3.getMatrix()),
-				MatrixConversion.StringToIntArray(c3.getMatrix()),
-				MatrixConversion.StringToIntArray(d3.getMatrix())
-			)
-		);
-		return MatrixConversion.prettify(matrix);
+		// String matrix = MatrixConversion.IntArrayToString(
+		// 	mergeblocks(
+		// 		MatrixConversion.StringToIntArray(a3.getMatrix()),
+		// 		MatrixConversion.StringToIntArray(b3.getMatrix()),
+		// 		MatrixConversion.StringToIntArray(c3.getMatrix()),
+		// 		MatrixConversion.StringToIntArray(d3.getMatrix())
+		// 	)
+		// );
+		return "MatrixConversion.prettify(matrix)";
 	};
 
 	// https://qmplus.qmul.ac.uk/pluginfile.php/2561581/mod_resource/content/0/BlockMult.java
