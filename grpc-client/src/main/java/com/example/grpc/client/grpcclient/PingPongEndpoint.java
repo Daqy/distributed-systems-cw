@@ -40,7 +40,7 @@ public class PingPongEndpoint {
 			return grpcClientService.multiplyFiles(matrixAContent, matrixBContent);
 		} catch (Exception error) {
 			error.printStackTrace();
-			return  error.getLocalizedMessage();
+			return "error.getLocalizedMessage()";
 		}
 	}
 }
