@@ -190,7 +190,7 @@ public class GRPCClientService {
 		CompletableFuture<MatrixReply> b3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
-					.setMatrixA(a1b2.get().getMatrix())
+					.setMatrixA(a1b2.getMatrix())
 					.setMatrixB(b1d2.get().getMatrix())
 					.build());
 			} catch (Exception error) {
