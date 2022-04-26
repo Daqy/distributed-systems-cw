@@ -7,6 +7,7 @@ import com.example.grpc.server.grpcserver.MatrixRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.example.grpc.server.grpcserver.MatrixReply;
 import com.example.grpc.server.grpcserver.MatrixServiceGrpc;
@@ -18,7 +19,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GRPCClientService {
+	static int[] ports = {8082,8083,8084,8085,8086,8087,8088,8089};
+
+	public ManagedChannel[] createChannels() {
+		ManagedChannel[] ch = new ManagedChannel[ports.length];
+		for (int index = 0; index < ports.length; index++) {
+			ch[index] = ManagedChannelBuilder.forAddress("localhost", ports[index]).usePlaintext().build();
+		}
+		return ch;
+	};
+
+	public MatrixServiceGrpc.MatrixServiceBlockingStub[] createStubs(ManagedChannel[] ch) {
+		MatrixServiceGrpc.MatrixServiceBlockingStub[] st = new MatrixServiceGrpc.MatrixServiceBlockingStub[ports.length];
+		for (int index = 0; index < ports.length; index++) {
+			st[index] = MatrixServiceGrpc.newBlockingStub(ch[index]);
+		}
+		return st;
+	}
+
 	public String multiplyFiles(String matrixAContent, String matrixBContent) throws Exception {
+		long deadline = 20 * 1000;
 		validateMatrix(matrixAContent);
 		validateMatrix(matrixBContent);
 		int[][] matrixA = MatrixConversion.StringToIntArray(matrixAContent);
@@ -26,71 +46,99 @@ public class GRPCClientService {
 
 		List<int[][]> blocks = createBlocks(matrixA, matrixB);
 
-		ManagedChannel channel1 = ManagedChannelBuilder.forAddress("localhost", 8085).usePlaintext().build();
-		MatrixServiceGrpc.MatrixServiceBlockingStub stub1 = MatrixServiceGrpc.newBlockingStub(channel1);
-		
-		ManagedChannel channel2 = ManagedChannelBuilder.forAddress("localhost", 8082).usePlaintext().build();
-		MatrixServiceGrpc.MatrixServiceBlockingStub stub2 = MatrixServiceGrpc.newBlockingStub(channel2);
-		
-		MatrixReply a1a2 = stub2.multiplyBlock(MatrixRequest.newBuilder()
+		ManagedChannel[] channels = createChannels();
+		MatrixServiceGrpc.MatrixServiceBlockingStub[] stubs = createStubs(channels);
+
+		long startTime = System.nanoTime();
+
+		CompletableFuture<MatrixReply> a1a2sync = CompletableFuture.supplyAsync(() -> stubs[0].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(0)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(1)))
-		.build());
+		.build()));
 
-		MatrixReply b1c2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		String a1a2 = a1a2sync.get();
+		long endTime = System.nanoTime();
+		long footprint= endTime-startTime;
+
+		int numberServer = (int) Math.ceil((float)footprint*(float)11/(float)deadline);
+		numberServer = numberServer <= 8 ? numberServer : 8;
+
+		int stubCounter = 1;
+		
+		MatrixReply b1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
-		.build());
+		.build())).get();
 
-		MatrixReply a1b2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply a1b2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(0)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(3)))
-		.build());
+		.build())).get();
 
-		MatrixReply b1d2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply b1d2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(7)))
-		.build());
+		.build())).get();
+		
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply c1a2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		MatrixReply c1a2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(1)))
-		.build());
+		.build())).get();
 
-		MatrixReply d1c2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply d1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
-		.build());
+		.build())).get();
 
-		MatrixReply c1b2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply c1b2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(3)))
-		.build());
+		.build())).get();
 
-		MatrixReply d1d2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply d1d2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(7)))
-		.build());
+		.build())).get();
 
-		MatrixReply a3 = stub1.addBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply a3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(a1a2.getMatrix())
 		.setMatrixB(b1c2.getMatrix())
-		.build());
+		.build())).get();
 
-		MatrixReply b3 = stub1.addBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply b3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(a1b2.getMatrix())
 		.setMatrixB(b1d2.getMatrix())
-		.build());
+		.build())).get();
 
-		MatrixReply c3 = stub1.addBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply c3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(c1a2.getMatrix())
 		.setMatrixB(d1c2.getMatrix())
-		.build());
+		.build())).get();
 
-		MatrixReply d3 = stub1.addBlock(MatrixRequest.newBuilder()
+		stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
+
+		MatrixReply d3 = CompletableFuture.supplyAsync(() -> stubs[stubCounter].addBlock(MatrixRequest.newBuilder()
 		.setMatrixA(c1b2.getMatrix())
 		.setMatrixB(d1d2.getMatrix())
-		.build());
+		.build())).get();
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
 		// System.out.printn(MatrixConversion.StringToIntArray(d3.getMatrix()));

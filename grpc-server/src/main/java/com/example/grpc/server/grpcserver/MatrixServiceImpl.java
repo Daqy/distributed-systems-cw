@@ -24,7 +24,6 @@ public class MatrixServiceImpl extends MatrixServiceGrpc.MatrixServiceImplBase {
 		}
 
 		String responseMatrix = MatrixConversion.IntArrayToString(_matrix);
-		System.out.println(responseMatrix);
 		MatrixReply response = MatrixReply.newBuilder().setMatrix(responseMatrix).build();
 
 		reply.onNext(response);
