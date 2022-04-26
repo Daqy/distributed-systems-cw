@@ -5,11 +5,11 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 @GrpcService
 public class MatrixServiceImpl extends MatrixServiceGrpc.MatrixServiceImplBase {
-	int _currentThread;
+	int _currentThread = 0;
 
-	public MatrixServiceImpl(int currentThread) {
-		this._currentThread = currentThread;
-	}
+	// public MatrixServiceImpl(int currentThread) {
+	// 	this._currentThread = currentThread;
+	// }
 
 	@Override
 	public void addBlock(MatrixRequest request, StreamObserver<MatrixReply> reply)
