@@ -90,7 +90,14 @@ public class GRPCClientService {
 		.build());
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
-		String matrix = MatrixConversion.IntArrayToString(mergeblocks(a3.getMatrix(),b3.getMatrix(),c3.getMatrix(),d3.getMatrix()));
+		String matrix = MatrixConversion.IntArrayToString(
+			mergeblocks(
+				MatrixConversion.StringToIntArray(a3.getMatrix()),
+				MatrixConversion.StringToIntArray(b3.getMatrix()),
+				MatrixConversion.StringToIntArray(c3.getMatrix()),
+				MatrixConversion.StringToIntArray(d3.getMatrix())
+			)
+		);
 		return MatrixConversion.prettify(matrix);
 	};
 
