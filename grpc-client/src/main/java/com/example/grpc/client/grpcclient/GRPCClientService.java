@@ -176,8 +176,8 @@ public class GRPCClientService {
 		CompletableFuture<MatrixReply> a3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
-					.setMatrixA(a1a2.getMatrix())
-					.setMatrixB(b1c2.getMatrix())
+					.setMatrixA(a1a2.get().getMatrix())
+					.setMatrixB(b1c2.get().getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
@@ -190,8 +190,8 @@ public class GRPCClientService {
 		CompletableFuture<MatrixReply> b3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
-					.setMatrixA(a1b2.getMatrix())
-					.setMatrixB(b1d2.getMatrix())
+					.setMatrixA(a1b2.get().getMatrix())
+					.setMatrixB(b1d2.get().getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
@@ -204,8 +204,8 @@ public class GRPCClientService {
 		CompletableFuture<MatrixReply> c3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
-					.setMatrixA(c1a2.getMatrix())
-					.setMatrixB(d1c2.getMatrix())
+					.setMatrixA(c1a2.get().getMatrix())
+					.setMatrixB(d1c2.get().getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
@@ -218,8 +218,8 @@ public class GRPCClientService {
 		CompletableFuture<MatrixReply> d3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
-					.setMatrixA(c1b2.getMatrix())
-					.setMatrixB(d1d2.getMatrix())
+					.setMatrixA(c1b2.get().getMatrix())
+					.setMatrixB(d1d2.get().getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
@@ -230,10 +230,10 @@ public class GRPCClientService {
 
 		// System.out.printn(MatrixConversion.StringToIntArray(d3.getMatrix()));
 		int[][] tmp = mergeblocks(
-				MatrixConversion.StringToIntArrayFromServer(a3.getMatrix()),
-				MatrixConversion.StringToIntArrayFromServer(b3.getMatrix()),
-				MatrixConversion.StringToIntArrayFromServer(c3.getMatrix()),
-				MatrixConversion.StringToIntArrayFromServer(d3.getMatrix()));
+				MatrixConversion.StringToIntArrayFromServer(a3.get().getMatrix()),
+				MatrixConversion.StringToIntArrayFromServer(b3.get().getMatrix()),
+				MatrixConversion.StringToIntArrayFromServer(c3.get().getMatrix()),
+				MatrixConversion.StringToIntArrayFromServer(d3.get().getMatrix()));
 		// String matrix = MatrixConversion.IntArrayToString(mergeblocks(
 		// 	MatrixConversion.StringToIntArrayFromServer(a3.getMatrix()),
 		// 	MatrixConversion.StringToIntArrayFromServer(b3.getMatrix()),
