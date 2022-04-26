@@ -111,7 +111,7 @@
 							<goal>java</goal>
 						</goals>
 						<configuration>
-							<mainClass>com.dscoursework.grpc.server.GrpcServer</mainClass>
+							<mainClass>com.dscoursework.grpc.server.GRPCServer</mainClass>
 						</configuration>
 					</execution>
 				</executions>
