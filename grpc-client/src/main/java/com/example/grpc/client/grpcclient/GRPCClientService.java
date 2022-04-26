@@ -148,6 +148,8 @@ public class GRPCClientService {
 		blocks.add(B1);blocks.add(B2);
 		blocks.add(C1);blocks.add(C2);
 		blocks.add(D1);blocks.add(D2);
+		System.out.println(D1);
+		System.out.println(D2);
 		return blocks;
 	}
 
