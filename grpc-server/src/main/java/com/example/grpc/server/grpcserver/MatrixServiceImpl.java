@@ -50,13 +50,14 @@ public class MatrixServiceImpl extends MatrixServiceGrpc.MatrixServiceImplBase {
 				for (int row = 0; row < sizeOfMatrix/2; row++) {
 					for (int column = 0; column < sizeOfMatrix/2; column++) {
 						for (int MatrixBrow = 0; MatrixBrow < sizeOfMatrix/2; MatrixBrow++) {
-							_matrix[row][column] += matrixA[row][MatrixBrow] + matrixB[MatrixBrow][column];
+							_matrix[row][column] += matrixA[row][MatrixBrow] * matrixB[MatrixBrow][column];
 						}
 					}
 				}
 
 				String responseMatrix = MatrixConversion.IntArrayToString(_matrix);
-				System.out.println(responseMatrix);
+				System.out.println(matrixA);
+				System.out.println(matrixB);
 				MatrixReply response = MatrixReply.newBuilder().setMatrix(responseMatrix).build();
 
 				reply.onNext(response);
