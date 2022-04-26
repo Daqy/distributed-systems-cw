@@ -17,13 +17,18 @@ public class MatrixConversion {
   }
 
   public static String IntArrayToString(int[][] matrix) {
-    String concat = "";
+    String concat = "[";
     for (int column = 0; column < matrix.length; column++) {
+      concat += "[";
       for (int row = 0; row < matrix[column].length; row++) {
-        concat += String.valueOf(matrix[column][row]) + (row==matrix[column].length-1 ? "" : " ");
+        concat += String.valueOf(matrix[column][row]) + (row==matrix[column].length-1 ? "" : ",");
       }
-      concat += "\n";
+      concat += "]" + (column==matrix.length-1 ? "" : ",");
     }
-    return concat;
+    return concat + "]";
+  }
+
+  public static String prettify(String matrix) {
+    return matrix.replace("[", "").replace("]", "\n").replace(",", " ");
   }
 }

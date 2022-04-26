@@ -28,7 +28,7 @@ public class GRPCClientService {
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
 		// int[][] matrix = MatrixConversion.StringToIntArray(multiplyMatrix.getMatrix());
-		return multiplyMatrix.getMatrix();
+		return MatrixConversion.prettify(multiplyMatrix.getMatrix());
 	};
 
 	public void validateMatrix(String matrix) throws Exception {

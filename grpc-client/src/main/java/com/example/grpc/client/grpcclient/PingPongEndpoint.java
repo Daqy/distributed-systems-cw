@@ -24,6 +24,7 @@ public class PingPongEndpoint {
 		this.grpcClientService = grpcClientService;
 	}
 
+	//https://stackoverflow.com/questions/38700790/how-to-return-a-html-page-from-a-restful-controller-in-spring-boot
 	@GetMapping("/")
 	public ModelAndView welcome() {
 		ModelAndView modelAndView = new ModelAndView();
