@@ -25,7 +25,7 @@ public class GRPCClientService {
 		//stud
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub1 = MatrixServiceGrpc.newBlockingStub(channel1);
 
-		MatrixReply multiplyMatrix = stub1.multiplyBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixB(matrixB));
+		MatrixReply multiplyMatrix = stub1.multiplyBlock(MatrixRequest.newBuilder().setMatrixA(matrixAContent).setMatrixB(matrixBContent));
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
 		// int[][] matrix = MatrixConversion.StringToIntArray(multiplyMatrix.getMatrix());

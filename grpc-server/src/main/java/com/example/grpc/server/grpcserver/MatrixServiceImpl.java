@@ -3,8 +3,6 @@ package com.example.grpc.server.grpcserver;
 
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
-
-import MatrixConversion;
 @GrpcService
 public class MatrixServiceImpl extends MatrixServiceGrpc.MatrixServiceImplBase
 {
