@@ -63,9 +63,7 @@
 
 	</dependencies>
 
-	<bean id="MatrixServiceImpl" class="com.example.grpc.server.grpcserver">
-		<constructor-arg val="currentThread"/>
-	</bean>
+	
 
 	<build>
 		<extensions>
