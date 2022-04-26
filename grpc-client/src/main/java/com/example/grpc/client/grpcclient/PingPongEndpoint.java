@@ -29,7 +29,7 @@ public class PingPongEndpoint {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("file.html");
 		return modelAndView;
-}  
+	}  
 
 	// https://stackoverflow.com/questions/31393553/how-to-read-a-multipart-file-as-a-string-in-spring
 	@PostMapping("/")
