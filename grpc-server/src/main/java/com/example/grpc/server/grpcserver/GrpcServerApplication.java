@@ -18,11 +18,11 @@ public class GrpcServerApplication extends SpringBootServletInitializer {
 		final int nServers = 3;
     ExecutorService executorService = Executors.newFixedThreadPool(nServers);
     for (int i = 0; i < nServers; i++) {
-        String name = "Server_" + i;
-        int port = 50000 + i;
+        int name = i+1;
+        int port = ports[i];
         executorService.submit(() -> {
             try {
-							new GRPCServer(ports[i], i+1).startServer();
+							new GRPCServer(port, name).startServer();
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
