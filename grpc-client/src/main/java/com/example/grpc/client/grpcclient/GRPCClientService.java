@@ -20,16 +20,15 @@ public class GRPCClientService {
 		// int[][] matrixB = MatrixConversion.StringToIntArray(matrixBContent);
 
 		//ch
-		// ManagedChannel channel1 = ManagedChannelBuilder.forAddress("localhost", 8080).usePlaintext().build();
+		ManagedChannel channel1 = ManagedChannelBuilder.forAddress("localhost", 8085).usePlaintext().build();
+		// stud
+		MatrixServiceGrpc.MatrixServiceBlockingStub stub1 = MatrixServiceGrpc.newBlockingStub(channel1);
 
-		// //stud
-		// MatrixServiceGrpc.MatrixServiceBlockingStub stub1 = MatrixServiceGrpc.newBlockingStub(channel1);
-
-		// MatrixReply multiplyMatrix = stub1.multiplyBlock(MatrixRequest.newBuilder().setMatrixA(matrixAContent).setMatrixB(matrixBContent).build());
+		MatrixReply multiplyMatrix = stub1.multiplyBlock(MatrixRequest.newBuilder().setMatrixA(matrixAContent).setMatrixB(matrixBContent).build());
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
 		// int[][] matrix = MatrixConversion.StringToIntArray(multiplyMatrix.getMatrix());
-		return "multiplyMatrix.getMatrix()";
+		return multiplyMatrix.getMatrix();
 	};
 
 	public void validateMatrix(String matrix) throws Exception {
