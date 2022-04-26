@@ -12,10 +12,11 @@ public class GrpcServerApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(GrpcServerApplication.class, args);
 
-		int cores = Runtime.getRuntime().availableProcessors();
+		// int cores = Runtime.getRuntime().availableProcessors();
+		new GRPCServer(8085, 1).startServer();
 
-		for (int index = 0; index < 1; index++) {
-			new GRPCServer(ports[index], index+1).startServer();
-		}
+		// for (int index = 0; index < 1; index++) {
+		// 	new GRPCServer(ports[index], index+1).startServer();
+		// }
 	}
 }
