@@ -13,15 +13,9 @@ public class GRPCServer extends Thread {
     this._server = ServerBuilder.forPort(port).addService(new MatrixServiceImpl()).build();
   }
 
-  public void startServer() {
-    try {
+  public void startServer() throws IOException, InterruptedException {
       this._server.start();
       System.out.printf("Server %d started on port: %d\n", this._currentThread, this._port);
       this._server.awaitTermination();
-    } catch (IOException error) {
-      error.printStackTrace();
-    } catch (InterruptedException error) {
-      error.printStackTrace();
-    }
   } 
 }

@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SpringBootApplication
 public class GrpcServerApplication extends SpringBootServletInitializer {
@@ -13,23 +15,36 @@ public class GrpcServerApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(GrpcServerApplication.class, args);
 
+		final int nServers = 3;
+    ExecutorService executorService = Executors.newFixedThreadPool(nServers);
+    for (int i = 0; i < nServers; i++) {
+        String name = "Server_" + i;
+        int port = 50000 + i;
+        executorService.submit(() -> {
+            try {
+							new GRPCServer(ports[i], i+1).startServer();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 		int cores = Runtime.getRuntime().availableProcessors();
 		// new GRPCServer(8085, 1).startServer();
 		// new GRPCServer(8086, 2).startServer();
 
-		for (int index = 0; index < cores; index++) {
-			try {
-				Server server = ServerBuilder.forPort(ports[index]).addService(new MatrixServiceImpl()).build();
-				// new GRPCServer(ports[index], index+1);
-				server.start();
-				System.out.printf("Server %d started on port: %d\n", index+1, ports[index]);
-				server.awaitTermination();
-			} catch (IOException error) {
-				error.printStackTrace();
-			} catch (InterruptedException error) {
-				error.printStackTrace();
-			}
-			;
-		}
+		// for (int index = 0; index < cores; index++) {
+		// 	try {
+		// 		Server server = ServerBuilder.forPort(ports[index]).addService(new MatrixServiceImpl()).build();
+		// 		// new GRPCServer(ports[index], index+1);
+		// 		server.start();
+		// 		System.out.printf("Server %d started on port: %d\n", index+1, ports[index]);
+		// 		server.awaitTermination();
+		// 	} catch (IOException error) {
+		// 		error.printStackTrace();
+		// 	} catch (InterruptedException error) {
+		// 		error.printStackTrace();
+		// 	}
+		// 	;
+		// }
 	}
 }
