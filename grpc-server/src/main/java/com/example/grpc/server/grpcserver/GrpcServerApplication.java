@@ -15,9 +15,9 @@ public class GrpcServerApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(GrpcServerApplication.class, args);
 
-		final int nServers = 3;
-    ExecutorService executorService = Executors.newFixedThreadPool(nServers);
-    for (int i = 0; i < nServers; i++) {
+		int cores = Runtime.getRuntime().availableProcessors();
+    ExecutorService executorService = Executors.newFixedThreadPool(cores);
+    for (int i = 0; i < cores; i++) {
         int name = i+1;
         int port = ports[i];
         executorService.submit(() -> {
@@ -28,7 +28,6 @@ public class GrpcServerApplication extends SpringBootServletInitializer {
             }
         });
     }
-		int cores = Runtime.getRuntime().availableProcessors();
 		// new GRPCServer(8085, 1).startServer();
 		// new GRPCServer(8086, 2).startServer();
 
