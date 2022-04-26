@@ -29,6 +29,6 @@ public class MatrixConversion {
   }
 
   public static String prettify(String matrix) {
-    return matrix.replace("[", "").replace("]", "\r\n").replace(",", " ");
+    return matrix.replace("[", "").replace("]", "<br>").replace(",", " ");
   }
 }
