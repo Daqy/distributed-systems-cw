@@ -69,12 +69,12 @@ public class GRPCClientService {
 		BlockingQueue<Integer> stubCounter = new LinkedBlockingQueue<>((int) 11);
 
 		for (int index = 0; index < 11; index++) {
-			stubCounter.add(index > numberServer ? index-numberServer : index);
+			stubCounter.add(index > numberServer-1 ? index-(numberServer-1) : index);
 		}
 		// int stubCounter = 1;
 		
 		
-		MatrixReply b1c2 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> b1c2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
@@ -84,12 +84,12 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 		
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply a1b2 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> a1b2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(0)))
@@ -99,11 +99,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply b1d2 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> b1d2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
@@ -113,11 +113,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 		
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply c1a2 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> c1a2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
@@ -127,11 +127,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply d1c2 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> d1c2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
@@ -141,11 +141,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply c1b2 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> c1b2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
@@ -155,11 +155,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply d1d2 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> d1d2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
@@ -169,11 +169,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply a3 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> a3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(a1a2.getMatrix())
@@ -183,11 +183,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply b3 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> b3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(a1b2.getMatrix())
@@ -197,11 +197,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply c3 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> c3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(c1a2.getMatrix())
@@ -211,11 +211,11 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
-		MatrixReply d3 = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture<MatrixReply> d3 = CompletableFuture.supplyAsync(() -> {
 			try {
 				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(c1b2.getMatrix())
@@ -225,7 +225,7 @@ public class GRPCClientService {
 				error.printStackTrace();
 			}
 			return null;
-		}).get();
+		});
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
 		// System.out.printn(MatrixConversion.StringToIntArray(d3.getMatrix()));
