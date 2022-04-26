@@ -29,7 +29,10 @@ public class GRPCClientService {
 		ManagedChannel channel1 = ManagedChannelBuilder.forAddress("localhost", 8085).usePlaintext().build();
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub1 = MatrixServiceGrpc.newBlockingStub(channel1);
 		
-		MatrixReply a1a2 = stub1.multiplyBlock(MatrixRequest.newBuilder()
+		ManagedChannel channel2 = ManagedChannelBuilder.forAddress("localhost", 8082).usePlaintext().build();
+		MatrixServiceGrpc.MatrixServiceBlockingStub stub2 = MatrixServiceGrpc.newBlockingStub(channel2);
+		
+		MatrixReply a1a2 = stub2.multiplyBlock(MatrixRequest.newBuilder()
 		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(0)))
 		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(1)))
 		.build());
