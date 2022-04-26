@@ -76,13 +76,14 @@ public class GRPCClientService {
 		
 		MatrixReply b1c2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
 					.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 		
 
@@ -90,130 +91,140 @@ public class GRPCClientService {
 
 		MatrixReply a1b2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(0)))
 					.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(3)))
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply b1d2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
 					.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(7)))
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 		
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply c1a2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
 					.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(1)))
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply d1c2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
 					.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply c1b2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(4)))
 					.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(3)))
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply d1d2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
 					.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(6)))
 					.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(7)))
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply a3 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(a1a2.getMatrix())
 					.setMatrixB(b1c2.getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply b3 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(a1b2.getMatrix())
 					.setMatrixB(b1d2.getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply c3 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(c1a2.getMatrix())
 					.setMatrixB(d1c2.getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
 		MatrixReply d3 = CompletableFuture.supplyAsync(() -> {
 			try {
-				stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
+				return stubs[stubCounter.take()].addBlock(MatrixRequest.newBuilder()
 					.setMatrixA(c1b2.getMatrix())
 					.setMatrixB(d1d2.getMatrix())
 					.build());
 			} catch (Exception error) {
 				error.printStackTrace();
 			}
+			return null;
 		}).get();
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
