@@ -73,10 +73,15 @@ public class GRPCClientService {
 		}
 		// int stubCounter = 1;
 		
-		MatrixReply b1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
-		.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
-		.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
-		.build())).get();
+		try {
+			MatrixReply b1c2 = CompletableFuture.supplyAsync(() -> stubs[stubCounter.take()].multiplyBlock(MatrixRequest.newBuilder()
+			.setMatrixA(MatrixConversion.IntArrayToString(blocks.get(2)))
+			.setMatrixB(MatrixConversion.IntArrayToString(blocks.get(5)))
+			.build())).get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 
 		// stubCounter = stubCounter+1 > numberServer ? 0 : stubCounter+1;
 
