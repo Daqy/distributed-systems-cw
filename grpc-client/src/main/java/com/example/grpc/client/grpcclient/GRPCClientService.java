@@ -90,13 +90,14 @@ public class GRPCClientService {
 		.build());
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
+		int[][] temp = mergeblocks(
+			MatrixConversion.StringToIntArray(a3.getMatrix()),
+			MatrixConversion.StringToIntArray(b3.getMatrix()),
+			MatrixConversion.StringToIntArray(c3.getMatrix()),
+			MatrixConversion.StringToIntArray(d3.getMatrix()));
+
 		// String matrix = MatrixConversion.IntArrayToString(
-		// 	mergeblocks(
-		// 		MatrixConversion.StringToIntArray(a3.getMatrix()),
-		// 		MatrixConversion.StringToIntArray(b3.getMatrix()),
-		// 		MatrixConversion.StringToIntArray(c3.getMatrix()),
-		// 		MatrixConversion.StringToIntArray(d3.getMatrix())
-		// 	)
+		// 	
 		// );
 		return "MatrixConversion.prettify(matrix)";
 	};
@@ -148,8 +149,6 @@ public class GRPCClientService {
 		blocks.add(B1);blocks.add(B2);
 		blocks.add(C1);blocks.add(C2);
 		blocks.add(D1);blocks.add(D2);
-		System.out.println(D1);
-		System.out.println(D2);
 		return blocks;
 	}
 
