@@ -1,4 +1,5 @@
 package com.example.grpc.server.grpcserver;
+import io.grpc.Server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,12 +13,22 @@ public class GrpcServerApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(GrpcServerApplication.class, args);
 
-		// int cores = Runtime.getRuntime().availableProcessors();
-		// // new GRPCServer(8085, 1).startServer();
-		// // new GRPCServer(8086, 2).startServer();
+		int cores = Runtime.getRuntime().availableProcessors();
+		// new GRPCServer(8085, 1).startServer();
+		// new GRPCServer(8086, 2).startServer();
 
-		// for (int index = 0; index < cores; index++) {
-		// 	new GRPCServer(ports[index], index+1).startServer();
-		// }
+		for (int index = 0; index < cores; index++) {
+			try {
+				Server server = new GRPCServer(ports[index], index+1)._server;
+				server.start();
+				System.out.printf("Server %d started on port: %d\n", this._currentThread, this._port);
+				server.awaitTermination();
+			} catch (IOException error) {
+				error.printStackTrace();
+			} catch (InterruptedException error) {
+				error.printStackTrace();
+			}
+			;
+		}
 	}
 }
