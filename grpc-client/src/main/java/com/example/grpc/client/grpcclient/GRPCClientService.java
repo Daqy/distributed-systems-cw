@@ -229,19 +229,13 @@ public class GRPCClientService {
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
 		// System.out.printn(MatrixConversion.StringToIntArray(d3.getMatrix()));
-		int[][] tmp = mergeblocks(
-				MatrixConversion.StringToIntArrayFromServer(a3.get().getMatrix()),
-				MatrixConversion.StringToIntArrayFromServer(b3.get().getMatrix()),
-				MatrixConversion.StringToIntArrayFromServer(c3.get().getMatrix()),
-				MatrixConversion.StringToIntArrayFromServer(d3.get().getMatrix()));
-		// String matrix = MatrixConversion.IntArrayToString(mergeblocks(
-		// 	MatrixConversion.StringToIntArrayFromServer(a3.getMatrix()),
-		// 	MatrixConversion.StringToIntArrayFromServer(b3.getMatrix()),
-		// 	MatrixConversion.StringToIntArrayFromServer(c3.getMatrix()),
-		// 	MatrixConversion.StringToIntArrayFromServer(d3.getMatrix()))
-		// );
-		return "tmp";
-		// return MatrixConversion.prettify(matrix);
+		String matrix = MatrixConversion.IntArrayToString(mergeblocks(
+			MatrixConversion.StringToIntArrayFromServer(a3.get().getMatrix()),
+			MatrixConversion.StringToIntArrayFromServer(b3.get().getMatrix()),
+			MatrixConversion.StringToIntArrayFromServer(c3.get().getMatrix()),
+			MatrixConversion.StringToIntArrayFromServer(d3.get().getMatrix()))
+		);
+		return MatrixConversion.prettify(matrix);
 	};
 
 	// https://qmplus.qmul.ac.uk/pluginfile.php/2561581/mod_resource/content/0/BlockMult.java
