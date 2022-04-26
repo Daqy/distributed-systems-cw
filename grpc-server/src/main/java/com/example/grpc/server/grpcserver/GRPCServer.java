@@ -13,6 +13,16 @@ public class GRPCServer extends Thread {
     this._server = ServerBuilder.forPort(port).addService(new MatrixServiceImpl()).build();
   }
 
+  public static void main(String[] args) {
+    Runtime runtime = Runtime.getRuntime();
+    int numberOfProcessors = runtime.availableProcessors();
+    System.out.println("Number of processors available to this JVM: " + numberOfProcessors);
+
+    // for(int i = 0; i<numberOfProcessors; i++) {
+    //     new GrpcServer(ports[i],i+1).start();
+    // }
+}
+
   public void startServer() {
     try {
       this._server.start();
