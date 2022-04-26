@@ -46,9 +46,9 @@ public class MatrixServiceImpl extends MatrixServiceGrpc.MatrixServiceImplBase {
 				int sizeOfMatrix = matrixA.length;
 				int[][] _matrix = new int[sizeOfMatrix][sizeOfMatrix];
 
-				for (int row = 0; row < sizeOfMatrix; row++) {
-					for (int column = 0; column < sizeOfMatrix; column++) {
-						for (int MatrixBrow = 0; MatrixBrow < sizeOfMatrix; MatrixBrow++) {
+				for (int row = 0; row < sizeOfMatrix/2; row++) {
+					for (int column = 0; column < sizeOfMatrix/2; column++) {
+						for (int MatrixBrow = 0; MatrixBrow < sizeOfMatrix/2; MatrixBrow++) {
 							_matrix[row][column] += matrixA[row][MatrixBrow] + matrixB[MatrixBrow][column];
 						}
 					}
