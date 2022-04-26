@@ -66,7 +66,7 @@ public class GRPCClientService {
 		int numberServer = (int) Math.ceil((float)footprint*(float)11/(float)deadline);
 		numberServer = numberServer <= 8 ? numberServer : 8;
 
-		BlockingQueue<Integer> stubCounter = new LinkedBlockingQueue<>((int) numBlockCalls);
+		BlockingQueue<Integer> stubCounter = new LinkedBlockingQueue<>((int) 11);
 
 		for (int index = 0; index < 11; index++) {
 			stubCounter.add(index > numberServer ? index-numberServer : index);
