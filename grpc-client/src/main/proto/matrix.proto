@@ -25,12 +25,12 @@ service MatrixService{
 }
 
 message MatrixRequest {
-  String MatrixA = 1;
-  String MatrixB = 2;
+  string MatrixA = 1;
+  string MatrixB = 2;
 }
 
 message MatrixReply {
-  String Matrix = 1;
+  string Matrix = 1;
 }
 
 
