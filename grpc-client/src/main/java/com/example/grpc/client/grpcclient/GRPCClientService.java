@@ -16,15 +16,15 @@ public class GRPCClientService {
 	public String multiplyFiles(String matrixAContent, String matrixBContent) throws Exception {
 		validateMatrix(matrixAContent);
 		validateMatrix(matrixBContent);
-		// int[][] matrixA = MatrixConversion.StringToIntArray(matrixAContent);
-		// int[][] matrixB = MatrixConversion.StringToIntArray(matrixBContent);
+		int[][] matrixA = MatrixConversion.StringToIntArray(matrixAContent);
+		int[][] matrixB = MatrixConversion.StringToIntArray(matrixBContent);
 
 		//ch
 		ManagedChannel channel1 = ManagedChannelBuilder.forAddress("localhost", 8085).usePlaintext().build();
 		// stud
 		MatrixServiceGrpc.MatrixServiceBlockingStub stub1 = MatrixServiceGrpc.newBlockingStub(channel1);
 
-		MatrixReply multiplyMatrix = stub1.multiplyBlock(MatrixRequest.newBuilder().setMatrixA(matrixAContent).setMatrixB(matrixBContent).build());
+		MatrixReply multiplyMatrix = stub1.multiplyBlock(MatrixRequest.newBuilder().setMatrixA(MatrixConversion.IntArrayToString(matrixA)).setMatrixB(MatrixConversion.IntArrayToString(matrixB)).build());
 		// MatrixReply multiplyMatrix = stud1.addBlock(MatrixRequest.newBuilder().setMatrixA(matrixA).setMatrixA(matrixB));
 
 		// int[][] matrix = MatrixConversion.StringToIntArray(multiplyMatrix.getMatrix());
